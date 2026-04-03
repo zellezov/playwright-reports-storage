@@ -34,8 +34,9 @@ func NewRouter(h *Handler) http.Handler {
 		rest := strings.TrimPrefix(path, "/reports/")
 		parts := strings.SplitN(rest, "/", 2)
 		id := parts[0]
+		// /reports/ with no ID — treat as /reports (browser typed trailing slash).
 		if id == "" {
-			http.NotFound(w, r)
+			h.ListReports(w, r)
 			return
 		}
 
